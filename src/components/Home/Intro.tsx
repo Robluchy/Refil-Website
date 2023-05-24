@@ -29,7 +29,7 @@ export default function Hero() {
   return (
     <Stack>
       <motion.div
-        className="flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black"
+        className="flex flex-col items-center justify-center w-screen h-screen overflow-hidden "
         initial="initial"
         animate="animate"
         exit="exit"
@@ -54,6 +54,7 @@ export default function Hero() {
                       <Text
                         fontFamily={"Rampart_One"}
                         textTransform={"uppercase"}
+                        color={"#90CDF4"}
                         as={"span"}
                         fontSize={{ sm: "8rem", md: "13rem", lg: "17rem" }}
                       >
@@ -67,6 +68,7 @@ export default function Hero() {
                   return (
                     <motion.span key={char + "-" + index} variants={letter}>
                       <Text
+                        color={"#90CDF4"}
                         fontFamily={"Rampart_One"}
                         textTransform={"uppercase"}
                         textUnderlineOffset={"0.2rem"}
