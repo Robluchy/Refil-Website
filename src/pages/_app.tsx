@@ -13,6 +13,7 @@ const noAuthRequired = [
   "/store",
   "/signup",
   "/products/[name]",
+  "/HowItWorks",
 ];
 
 export default function App({ Component, pageProps }: AppProps) {
