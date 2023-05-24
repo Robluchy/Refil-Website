@@ -1,7 +1,7 @@
 import Head from "next/head";
-import Navbar from "@/components/ui/Navbar";
 import { Box } from "@chakra-ui/react";
-import Footer from "./Footer";
+import Footer from "@/components/Footer";
+import Navbar from "./NavBar";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -37,3 +37,5 @@ export const Layout = ({ children, title }: LayoutProps) => {
     </>
   );
 };
+
+export default Layout;

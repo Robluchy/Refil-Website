@@ -5,8 +5,8 @@ export default function Footer() {
     <Container
       userSelect={"none"}
       as={Stack}
-      maxW={"6xl"}
-      py={4}
+      maxW={"8xl"}
+      my={4}
       justify={{ base: "center" }}
       align={{ base: "center", md: "center" }}
     >

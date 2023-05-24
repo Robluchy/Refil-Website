@@ -1,4 +1,11 @@
-import { setDoc, getDoc, doc, updateDoc, arrayUnion } from "firebase/firestore";
+import {
+  setDoc,
+  getDoc,
+  doc,
+  updateDoc,
+  arrayUnion,
+  arrayRemove,
+} from "firebase/firestore";
 import { db } from "@/firebase/config";
 import { UserInfo } from "@/interfaces";
 
@@ -14,6 +21,8 @@ export const createDefaultUser = async (
       uid: userId,
       email: email,
       points: 0,
+      bottles: 0,
+      favorites: [],
     });
   }
 };
@@ -30,6 +39,32 @@ export const shippingData = async (userId: string, data: any) => {
       { merge: true }
     );
   }
+};
+
+export const updateFavorite = async (
+  userId: string,
+  productId: string,
+  isFavorite: boolean
+) => {
+  const userRef = doc(db, "users", userId);
+  if (isFavorite) {
+    await updateDoc(userRef, {
+      favorites: arrayRemove(productId),
+    });
+  } else {
+    await updateDoc(userRef, {
+      favorites: arrayUnion(productId),
+    });
+  }
+};
+export const getFavorites = async (userId: string): Promise<string[]> => {
+  const userRef = doc(db, "users", userId);
+  const userSnapshot = await getDoc(userRef);
+  if (userSnapshot.exists()) {
+    const userData = userSnapshot.data();
+    return userData?.favorites || [];
+  }
+  return [];
 };
 
 export const hasShippingInfo = async (userId: string): Promise<boolean> => {

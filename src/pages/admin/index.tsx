@@ -1,69 +1,127 @@
-import { Box, Heading, Text, Stack, SimpleGrid } from "@chakra-ui/react";
-import { CrudProducts } from "@/components/products/CrudProducts";
-import AddProduct from "@/components/products/AddProduct";
-import { ProductList } from "@/interfaces";
+import {
+  Box,
+  Heading,
+  Text,
+  Table,
+  Thead,
+  Tr,
+  Th,
+  Tbody,
+  Td,
+  Button,
+  Stack,
+} from "@chakra-ui/react";
+import { UserInfo } from "@/interfaces";
 import { GetStaticProps } from "next";
+import { Layout } from "./Layout";
+import { getUsers } from "@/firebase/utils/getUsers";
 import { useState } from "react";
-import { Layout } from "@/components/Layout";
-import { getProducts } from "@/firebase/utils/getProducts";
 
 interface Props {
-  products: ProductList[];
+  users: UserInfo[];
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const products = await getProducts();
-  return {
-    props: { products },
-    revalidate: 10,
-  };
+  const users = await getUsers();
+  return { props: { users } };
 };
 
-export default function Products({ products }: Props) {
-  const [productList, setProductList] = useState<ProductList[]>(products);
-  const handleAddProduct = (newProduct: ProductList) => {
-    setProductList([...productList, newProduct]);
-  };
+export default function Admin({ users }: Props) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
+  const pageCount = Math.ceil(users.length / pageSize);
+
+  const visibleUsers = users.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
 
   return (
     <Layout title="Admin Products">
-      <SimpleGrid
-        minH={"100vh"}
-        m={0}
-        gap={6}
-        gridAutoFlow="dense"
-        justifyContent="center"
-        alignItems="center"
-        p={0}
-        templateColumns={{
-          md: "repeat(1, 1fr)",
-          xl: "repeat(2, 1fr)",
-        }}
-      >
-        <Box
-          order={{ base: 2, xl: 0 }}
-          rounded={"lg"}
+      <Box maxW={"7xl"} mx={"auto"} py={12} px={6}>
+        <Heading>Users</Heading>
+        <Text my={8}>
+          A list of users retrieved from a Firebase Cloud Firestore collection.
+        </Text>
+        <Table
+          mt={6}
+          variant="simple"
+          bg={"white"}
+          boxShadow={"md"}
+          maxW={"7xl"}
           mx={"auto"}
-          maxW={{ base: "md", md: "xl", xl: "2xl" }}
-          w={"full"}
-          boxShadow={"lg"}
-          p={8}
+          py={12}
+          px={6}
+          shadow={"2xl"}
+          rounded={"lg"}
+          overflow={"hidden"}
         >
-          <Stack align={"center"}>
-            <Heading fontSize={"4xl"} textAlign={"center"}>
-              Register a new product to the store 🛒
-            </Heading>
-            <Text fontSize={"xs"} color={"gray.600"} py={8}>
-              remember to fill all the fields if you want to add a new product
-            </Text>
+          <Thead>
+            <Tr>
+              <Th>Name</Th>
+              <Th>Email</Th>
+              <Th>Points</Th>
+              <Th>Purchase History</Th>
+              <Th> Bottles Recycled</Th>
+            </Tr>
+          </Thead>
+          <Tbody>
+            {visibleUsers.length > 0 ? (
+              visibleUsers.map((user) => (
+                <Tr key={user.uid}>
+                  <Td>{user.name}</Td>
+                  <Td>{user.email}</Td>
+                  <Td>{user.points}</Td>
+                  <Td>
+                    <Button
+                      size="sm"
+                      bg="transparent"
+                      onClick={() => {
+                        console.log("View user history");
+                      }}
+                    >
+                      📜
+                    </Button>
+                  </Td>
+                  <Td>{user.bottles}</Td>
+                </Tr>
+              ))
+            ) : (
+              <Tr>
+                <Td colSpan={3}>No users found.</Td>
+              </Tr>
+            )}
+          </Tbody>
+        </Table>
+        {pageCount > 1 && (
+          <Stack direction="row" mt={6} justify={"center"} align={"center"}>
+            <Button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
+            >
+              Previous
+            </Button>
+            {Array.from({ length: pageCount }, (_, index) => {
+              const pageNumber = index + 1;
+              return (
+                <Button
+                  key={pageNumber}
+                  isActive={pageNumber === currentPage}
+                  onClick={() => setCurrentPage(pageNumber)}
+                >
+                  {pageNumber}
+                </Button>
+              );
+            })}
+            <Button
+              disabled={currentPage === pageCount}
+              onClick={() => setCurrentPage(currentPage + 1)}
+            >
+              Next
+            </Button>
           </Stack>
-          <AddProduct handleAddProduct={handleAddProduct} />
-        </Box>
-
-        <Stack align={"center"} order={{ base: 1, md: 1 }}>
-          <CrudProducts product={productList} />
-        </Stack>
-      </SimpleGrid>
+        )}
+      </Box>
     </Layout>
   );
 }

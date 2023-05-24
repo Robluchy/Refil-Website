@@ -13,6 +13,7 @@ import {
   Input,
   ModalFooter,
   Flex,
+  useToast,
 } from "@chakra-ui/react";
 import { useRef, useState } from "react";
 import { ProductList } from "@/interfaces";
@@ -32,6 +33,7 @@ function ShippingModal({ pro }: props) {
   const [country, setCountry] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
+  const toast = useToast();
 
   const handleShipping = async () => {
     const data = {
@@ -45,8 +47,23 @@ function ShippingModal({ pro }: props) {
     };
     try {
       await shippingData(user.uid, data);
+      toast({
+        title: "Shipping information saved.",
+        description: "We've created your account for you.",
+        status: "success",
+        duration: 9000,
+        isClosable: true,
+      });
+
+      onClose();
     } catch (e) {
-      console.log(e);
+      toast({
+        title: "An error occurred.",
+        description: "Unable to save shipping information.",
+        status: "error",
+        duration: 9000,
+        isClosable: true,
+      });
     }
   };
 

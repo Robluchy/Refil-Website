@@ -16,11 +16,10 @@ import {
 } from "@chakra-ui/react";
 import { List, SlidersHorizontal, Star, X } from "phosphor-react";
 import { useAuth } from "@/firebase/context/AuthContext";
-import LoginModal from "./LoginModal";
 import { logout } from "@/firebase/auth";
 import { useRouter } from "next/router";
-import CustomAvatar from "../CustomAvatar";
 import Lottie from "lottie-react";
+import CustomAvatar from "@/components/CustomAvatar";
 
 const handleLogout = async () => {
   await logout();
@@ -37,10 +36,9 @@ function formatPoints(points: number): string {
 }
 
 const Links = [
-  { text: "home", href: "/" },
-  { text: "store", href: "/store" },
-  { text: "about", href: "/about" },
-  { text: "How It Works", href: "/HowItWorks" },
+  { text: "Store", href: "/" },
+  { text: "Dashboard", href: "/admin" },
+  { text: "Products", href: "/admin/products" },
 ];
 
 const NavLink = ({ link }: { link: { text: string; href: string } }) => (
@@ -50,7 +48,7 @@ const NavLink = ({ link }: { link: { text: string; href: string } }) => (
     rounded={"md"}
     _hover={{
       textDecoration: "none",
-      bg: "#D8EEFE",
+      bg: "cyan.200",
     }}
     href={link.href}
   >
@@ -101,7 +99,9 @@ export default function Navbar() {
             display={{ md: "none" }}
             onClick={isOpen ? onClose : onOpen}
           />
-          <Box></Box>
+          <Link href="/">
+            <Box display={{ base: "none", md: "block" }}></Box>
+          </Link>
           <HStack spacing={8} alignItems={"center"}>
             <HStack
               as={"nav"}
@@ -115,88 +115,57 @@ export default function Navbar() {
               ))}
             </HStack>
           </HStack>
-          <Box display={"flex"} alignItems={"center"}>
-            <Flex alignItems={"center"} gap={2} mr={2}>
-              {user && (
-                <Show above="md">
-                  <Flex minWidth="max-content" alignItems="center" gap="2">
-                    <Text
-                      fontFamily={"body"}
-                      fontWeight="bold"
-                      textShadow={gold}
-                      color={"black"}
-                      colorScheme=""
-                    >
-                      {formatPoints(user.points)}
-                    </Text>
-                    <Lottie
-                      animationData={require("public/coin.json")}
-                      style={{ height: 20 }}
-                    />
-                  </Flex>
-                </Show>
-              )}
-            </Flex>
+
+          <Flex alignItems={"center"} gap={2}>
+            {user && (
+              <Show above="md">
+                <Flex minWidth="max-content" alignItems="center" gap="2">
+                  <Text
+                    fontFamily={"body"}
+                    fontWeight="bold"
+                    textShadow={gold}
+                    color={"black"}
+                    colorScheme=""
+                  >
+                    {formatPoints(user.points)}
+                  </Text>
+                  <Lottie
+                    animationData={require("public/coin.json")}
+                    style={{ height: 20 }}
+                  />
+                </Flex>
+              </Show>
+            )}
             <Menu>
               {user && (
                 <MenuButton rounded={"full"} cursor={"pointer"} minW={0}>
-                  <CustomAvatar name={user.name} />
+                  <CustomAvatar name={user.name || ""} />
                 </MenuButton>
               )}
-              {!user && <LoginModal />}
               {user && (
-                <MenuList p={6} shadow="dark-lg" rounded="lg">
-                  <MenuItem
-                    _hover={{
-                      bg: "transparent",
-                    }}
-                  >
-                    {user.email}
-                  </MenuItem>
+                <MenuList>
+                  <MenuItem>{user.email}</MenuItem>
                   <Show below="md">
-                    <MenuItem
-                      textAlign={"center"}
-                      _hover={{
-                        bg: "transparent",
-                      }}
-                    >
+                    <MenuItem textAlign={"center"}>
                       {formatPoints(user.points)}
                     </MenuItem>
                   </Show>
-                  <MenuItem
-                    gap={4}
-                    onClick={() => router.push("/settings")}
-                    _hover={{
-                      bg: "transparent",
-                    }}
-                  >
+                  <MenuItem gap={4} onClick={() => router.push("/settings")}>
                     <SlidersHorizontal size={32} weight="bold" />
                     <span>Settings</span>
                   </MenuItem>
-                  <MenuItem
-                    gap={4}
-                    onClick={() => router.push("/favorites")}
-                    _hover={{
-                      bg: "transparent",
-                    }}
-                  >
+                  <MenuItem gap={4} onClick={() => router.push("/favorites")}>
                     <Star size={32} weight="bold" />
                     <span>Favorites</span>
                   </MenuItem>
                   <MenuDivider />
-                  <MenuItem
-                    gap={4}
-                    onClick={handleLogout}
-                    _hover={{
-                      bg: "transparent",
-                    }}
-                  >
+                  <MenuItem gap={4} onClick={handleLogout}>
                     👋 Sign Out
                   </MenuItem>
                 </MenuList>
               )}
             </Menu>
-          </Box>
+          </Flex>
         </Flex>
 
         {isOpen ? (

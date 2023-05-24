@@ -4,7 +4,6 @@ import {
   Button,
   Stack,
   Text,
-  Image,
   Box,
   Container,
 } from "@chakra-ui/react";
@@ -23,7 +22,7 @@ export default function Hero() {
 
   const router = useRouter();
   return (
-    <Stack h={"100%"} direction={{ base: "column", xl: "row" }}>
+    <Stack h={"100%"} direction={{ base: "column", xl: "row" }} mt={10}>
       <Container maxW={"7xl"}>
         <Stack
           align={"center"}
@@ -37,12 +36,17 @@ export default function Hero() {
             spacing={{ base: 5, md: 10 }}
             order={{ base: 1, md: 0 }}
           >
-            <Heading>
-              <Text as={"span"} fontSize={{ base: "8xl", md: "9xl" }}>
-                What?? Coins??
-              </Text>
+            <Heading
+              fontSize={{ base: "8xl", md: "9xl" }}
+              fontWeight={"black"}
+              color={"primary.Heading"}
+            >
+              What?? Coins??
             </Heading>
-            <Text as={"h1"} fontSize={{ base: "md", lg: "lg" }}>
+            <Text
+              fontSize={{ base: "md", lg: "lg" }}
+              color={"primary.Paragraph"}
+            >
               Recycle and Earn Reward Coins! At ReFil, we believe in rewarding
               your sustainable efforts. Every time you recycle, receive coins
               that can be redeemed for{" "}
@@ -61,8 +65,8 @@ export default function Hero() {
                 size={"lg"}
                 fontWeight={"normal"}
                 px={6}
-                colorScheme={"blue"}
-                _hover={{ bg: "black" }}
+                bg={"primary.Button"}
+                _hover={{ bg: "black", textColor: "white" }}
                 onClick={() => {
                   router.push("/signup");
                 }}

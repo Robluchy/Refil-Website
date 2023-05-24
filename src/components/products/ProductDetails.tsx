@@ -10,95 +10,173 @@ import {
   Button,
   Link,
   Tooltip,
+  Heading,
+  SimpleGrid,
 } from "@chakra-ui/react";
 import CheckShippingInfo from "./CheckShippingInfo";
+import { getFavorites, updateFavorite } from "@/firebase/firestore";
+import { useEffect, useState } from "react";
+import Lottie from "lottie-react";
 
 interface ProductCardProps {
   pro: ProductList;
 }
-const settings = {
-  dots: true,
-  infinite: true,
-  speed: 500,
-  slidesToShow: 1,
-  slidesToScroll: 1,
-};
 
 export default function ProductDetails({ pro }: ProductCardProps) {
   const { user } = useAuth();
+  const [isFavorite, setIsFavorite] = useState(false);
 
-  const Form1 = () => {
-    return (
-      <>
-        <Text
-          fontSize={"2xl"}
-          fontWeight="semibold"
-          mb="4%"
-          textAlign="center"
-          textTransform={"uppercase"}
-        >
-          End user license agreement for refil store
-        </Text>
-        <Text fontSize={"md"} mb="4%">
-          By clicking on the Next button, I accept the
-          <Link href={"/"} color="blue">
-            terms and conditions
-          </Link>
-          of the license agreement for the use of the refil store software
-          product, which is a legally binding agreement between me and the refil
-          store software product.
-        </Text>
-      </>
-    );
+  useEffect(() => {
+    const fetchFavorites = async () => {
+      if (user) {
+        const favorites = await getFavorites(user.uid);
+        setIsFavorite(favorites.includes(pro.name));
+      }
+    };
+    fetchFavorites();
+  }, [user, pro.name]);
+  const style = {
+    height: 60,
   };
   return (
-    <Container maxW={"8xl"} mt={20}>
-      <Text as={"h1"} fontSize={"4xl"} fontWeight={"bold"} mb={4}>
-        {pro.name}
-      </Text>
-      <Grid gap={4} alignItems={"center"} templateColumns={"repeat(3, 1fr)"}>
-        <GridItem colSpan={2}>
-          <Box>
-            <Image src={pro.image[0]} w={"33%"} h={"33%"} alt={pro.name} />
-          </Box>
-        </GridItem>
-        <GridItem>
-          <Box>
-            <Text fontSize={"2xl"} fontWeight={"bold"} m={4}>
+    <Box bg={"#D8EEFE"} h={"100%"} w={"100%"}>
+      <Container
+        maxW={"8xl"}
+        justifyContent={"center"}
+        alignItems={"center"}
+        mb={32}
+      >
+        <SimpleGrid columns={{ base: 1, lg: 2 }} gap={10} h={"100%"}>
+          <Box
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            w={"full"}
+            h={"100%"}
+          >
+            <Heading
+              fontSize={{ base: "6xl", md: "8xl", lg: "7xl", xl: "8xl" }}
+              fontWeight={"black"}
+              textAlign={"center"}
+              textTransform={"uppercase"}
+              color={"primary.Heading"}
+            >
               {pro.name}
-            </Text>
+            </Heading>
           </Box>
-          <Box>
-            {user ? (
-              user.points < pro.points ? (
+
+          <Box
+            display={"flex"}
+            justifyContent={"center"}
+            alignItems={"center"}
+            h={"100%"}
+          >
+            <SimpleGrid columns={1} gap={"6"}>
+              <GridItem colSpan={2}>
+                <Box my={8}>
+                  <Image
+                    src={pro.image[0]}
+                    alt={pro.name}
+                    w={"fit-content"}
+                    h={"fit-content"}
+                    m={"auto"}
+                    borderRadius={"xl"}
+                    boxShadow="dark-lg"
+                    border={"1px solid"}
+                    objectFit="cover"
+                  />
+                </Box>
+                <SimpleGrid gap={10} columns={{ base: 1, md: 2 }}>
+                  {pro.image
+                    .flat()
+                    .slice(1)
+                    .map((img, index) => (
+                      <GridItem
+                        key={index}
+                        m="auto"
+                        w="fit-content"
+                        h="fit-content"
+                        mt={4}
+                      >
+                        <Image
+                          src={img}
+                          borderRadius={"xl"}
+                          boxShadow="dark-lg"
+                          boxDecorationBreak={"slice"}
+                          alt={img}
+                          border={"1px solid"}
+                          w={"fit-content"}
+                          h={"fit-content"}
+                          objectFit="cover"
+                        />
+                      </GridItem>
+                    ))}
+                </SimpleGrid>
+              </GridItem>
+            </SimpleGrid>
+          </Box>
+        </SimpleGrid>
+      </Container>
+      <Container maxW={"7xl"}>
+        <Box>
+          {user ? (
+            user.points < pro.points ? (
+              <Box display={"flex"} alignItems={"center"} m={"auto"} mb={10}>
                 <Tooltip label="You don't have enough points" hasArrow>
-                  <Button isDisabled={user.points < pro.points}>
+                  <Button isDisabled={user.points < pro.points} fontSize="2xl">
                     {pro.points}
+                    <Lottie
+                      animationData={require("public/coins.json")}
+                      style={style}
+                    />
                   </Button>
                 </Tooltip>
-              ) : (
-                <CheckShippingInfo pro={pro} user={user} />
-              )
+              </Box>
             ) : (
-              <Link href="/signup">
-                <Button>{pro.points}</Button>
-              </Link>
-            )}
-          </Box>
-        </GridItem>
-        {pro.description && (
-          <GridItem colSpan={3}>
-            <Box>
-              <Text fontSize={"2xl"} fontWeight={"bold"} m={4}>
-                Description
-              </Text>
-              <Text fontSize={"xl"} m={4}>
-                {pro.description}
-              </Text>
+              <CheckShippingInfo pro={pro} user={user} />
+            )
+          ) : (
+            <Link href="/signup">
+              <Button>{pro.points}</Button>
+            </Link>
+          )}
+          {user && (
+            <Box display={"flex"} alignItems={"center"} m={"auto"} mb={10}>
+              <Box w={"7%"} h={"7%"}>
+                <Button
+                  onClick={() => {
+                    updateFavorite(user.uid, pro.name, isFavorite);
+                    setIsFavorite(!isFavorite);
+                  }}
+                  _hover={{ bg: "transparent" }}
+                  w={"fit-content"}
+                  h={"fit-content"}
+                  bg="transparent"
+                >
+                  {isFavorite ? (
+                    <Lottie animationData={require("public/heart.json")} />
+                  ) : (
+                    <Lottie
+                      animationData={require("public/black-heart.json")}
+                    />
+                  )}
+                </Button>
+              </Box>
             </Box>
-          </GridItem>
+          )}
+        </Box>
+
+        {pro.description && (
+          <Box>
+            <Text fontSize={"2xl"} fontWeight={"bold"} m={4}>
+              Description
+            </Text>
+            <Text fontSize={"xl"} m={4}>
+              {pro.description}
+            </Text>
+          </Box>
         )}
-      </Grid>
-    </Container>
+      </Container>
+    </Box>
   );
 }

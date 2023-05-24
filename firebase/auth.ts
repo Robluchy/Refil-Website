@@ -26,7 +26,6 @@ export async function signUp(email: string, password: string): Promise<void> {
         userCredential.user.email
       );
     }
-
   } catch (e) {
     throw e;
   }
@@ -39,14 +38,6 @@ export async function signInWithGoogle(): Promise<void> {
     if (user) {
       await createDefaultUser(user.uid, user.email);
     }
-  } catch (e) {
-    throw e;
-  }
-}
-
-export async function signInWithGithub(): Promise<void> {
-  try {
-    await signInWithPopup(auth, new GithubAuthProvider());
   } catch (e) {
     throw e;
   }

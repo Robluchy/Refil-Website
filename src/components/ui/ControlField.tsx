@@ -4,16 +4,14 @@ import {
   Button,
   FormControl,
   FormLabel,
-  IconButton,
   Input,
   InputGroup,
   Progress,
   InputProps,
-  InputRightElement,
   useDisclosure,
   useMergeRefs,
+  Checkbox,
 } from "@chakra-ui/react";
-import { EyeSlash, Eye } from "phosphor-react";
 import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 export const ControlField = forwardRef<HTMLInputElement, InputProps>(
@@ -64,7 +62,6 @@ export const ControlField = forwardRef<HTMLInputElement, InputProps>(
         });
         router.push("/");
       } catch (error) {
-        // Utiliza una declaración de tipo de aserción para tratar el error como un objeto de error
         const typedError = error as { code?: string; message: string };
         console.error(typedError);
         let errorMessage = "An error occurred";
@@ -122,15 +119,6 @@ export const ControlField = forwardRef<HTMLInputElement, InputProps>(
             Password
           </FormLabel>
           <InputGroup>
-            <InputRightElement>
-              <IconButton
-                tabIndex={-1}
-                variant="link"
-                aria-label={isOpen ? "Mask password" : "Reveal password"}
-                icon={isOpen ? <EyeSlash /> : <Eye />}
-                onClick={onClickReveal}
-              />
-            </InputRightElement>
             <Input
               id="password"
               ref={mergeRef}
@@ -158,6 +146,15 @@ export const ControlField = forwardRef<HTMLInputElement, InputProps>(
                 );
               }}
             />
+            <Checkbox
+              mt={2}
+              onChange={onClickReveal}
+              isChecked={isOpen}
+              colorScheme="blue"
+            >
+              Show password
+            </Checkbox>
+
             <Progress
               mt={2}
               value={passwordMatchPercentage}

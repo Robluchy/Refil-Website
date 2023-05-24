@@ -5,7 +5,6 @@ import {
   Stat,
   StatLabel,
   StatNumber,
-  useColorModeValue,
 } from "@chakra-ui/react";
 
 interface StatsCardProps {
@@ -21,7 +20,7 @@ function StatsCard(props: StatsCardProps) {
       py={"5"}
       shadow={"xl"}
       border={"1px solid"}
-      borderColor={useColorModeValue("gray.800", "gray.500")}
+      borderColor={"gray.800"}
       rounded={"lg"}
     >
       <StatLabel fontWeight={"medium"} isTruncated>

@@ -10,7 +10,7 @@ import {
   Link,
 } from "@chakra-ui/react";
 import Team from "@/components/data/teamDto";
-import { GithubLogo, LinkedinLogo } from "phosphor-react";
+import Lottie from "lottie-react";
 
 const fadeIn = {
   hidden: { opacity: 0 },
@@ -147,14 +147,22 @@ export default function About() {
                               target="_blank"
                               rel="noopener"
                             >
-                              <LinkedinLogo size={32} />
+                              <Lottie
+                                animationData={require("public/linkedin.json")}
+                                style={{ width: 42, height: 42 }}
+                                loop={false}
+                              />
                             </Link>
                             <Link
                               href={member.github}
                               target="_blank"
                               rel="noopener"
                             >
-                              <GithubLogo size={32} />
+                              <Lottie
+                              
+                                animationData={require("public/github.json")}
+                                style={{ width: 32, height: 32 }}
+                              />
                             </Link>
                           </Stack>
                         </Stack>

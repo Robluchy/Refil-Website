@@ -17,31 +17,18 @@ const rampartOne = Rampart_One({
 });
 
 const theme = {
-
   colors: {
-    brand: {
-      light: "#90CDF4",
-      dark: "#0077B6",
-    },
-    accent: {
-      light: "#FCD34D",
-      dark: "#F59E0B",
-    },
-    neutral: {
-      light: "#F5F5F5",
-      dark: "#1F2937",
-    },
-    success: {
-      light: "#34D399",
-      dark: "#10B981",
-    },
-    danger: {
-      light: "#EF4444",
-      dark: "#DC2626",
-    },
     primary: {
-      light: "#F5F5F5",
-      dark: "#1A202C",
+      background: "#fffffe",
+      Heading: "#094067",
+      Paragraph: "#5f6c7b",
+      Button: "#3da9fc",
+    },
+    secondary: {
+      background: "#D8EEFE",
+      Heading: "#fffffe",
+      Paragraph: "#3da9fc",
+      dark: "#094067",
     },
   },
   fonts: {
@@ -53,6 +40,7 @@ const theme = {
     global: {
       body: {
         fontFamily: "Montserrat_Alternates",
+        bg: "primary.background",
       },
     },
   },

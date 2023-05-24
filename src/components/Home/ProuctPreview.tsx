@@ -1,7 +1,6 @@
 import { ProductList } from "@/interfaces";
 import {
   Box,
-  Text,
   Image,
   Container,
   SimpleGrid,
