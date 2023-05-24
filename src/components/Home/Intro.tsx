@@ -73,7 +73,7 @@ export default function Hero() {
                         textTransform={"uppercase"}
                         textUnderlineOffset={"0.2rem"}
                         as={"span"}
-                        fontSize={{ sm: "3rem", md: "5rem", lg: "9rem" }}
+                        fontSize={{ sm: "3rem", md: "5rem", lg: "6rem" }}
                       >
                         {char}
                       </Text>

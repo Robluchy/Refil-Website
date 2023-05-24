@@ -50,16 +50,16 @@ export default function About() {
           <motion.div variants={fadeIn} initial="hidden" animate="visible">
             <Heading
               fontWeight={600}
-              fontSize={{ base: "2xl", sm: "4xl", md: "6xl" }}
+              fontSize={{ base: "2xl", sm: "4xl", md: "5xl" }}
               fontFamily={"Montserrat_Alternates"}
               textTransform={"uppercase"}
-              mb={3}
+              py={4}
             >
               We are a small team but we have big dreams
             </Heading>
           </motion.div>
         </Stack>
-        <Container maxW={"8xl"}>
+        <Container maxW={"7xl"}>
           <SimpleGrid
             columns={{ base: 1, md: 3 }}
             gap={{ base: "5", md: "6" }}
@@ -159,7 +159,6 @@ export default function About() {
                               rel="noopener"
                             >
                               <Lottie
-                              
                                 animationData={require("public/github.json")}
                                 style={{ width: 32, height: 32 }}
                               />

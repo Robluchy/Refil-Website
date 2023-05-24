@@ -41,7 +41,7 @@ export default function Favorites() {
       <Box bg="secondary.background" h={"100%"}>
         <Container maxW={"8xl"} h={"full"} pb={"36"}>
           <Text
-            fontSize={{ base: "6xl", md: "8xl" }}
+            fontSize={{ base: "5xl", md: "7xl" }}
             textTransform={"uppercase"}
             fontWeight={"bold"}
             color={"primary.Heading"}

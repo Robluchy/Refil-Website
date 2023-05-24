@@ -37,7 +37,7 @@ export default function Hero() {
             order={{ base: 1, md: 0 }}
           >
             <Heading
-              fontSize={{ base: "8xl", md: "9xl" }}
+              fontSize={{ base: "6xl", md: "8xl" }}
               fontWeight={"black"}
               color={"primary.Heading"}
             >

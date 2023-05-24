@@ -35,8 +35,9 @@ function formatPoints(points: number): string {
     return points.toString();
   }
 }
+const adminUid = process.env.NEXT_PUBLIC_ADMIN_UID;
 
-const Links = [
+const baseLinks = [
   { text: "home", href: "/" },
   { text: "store", href: "/store" },
   { text: "about", href: "/about" },
@@ -64,6 +65,11 @@ export default function Navbar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const gold =
     "0.2px 0.2px 1px #FDD835, -0.2px -0.2px 1px #FDD835, 0.2px -0.2px 1px #FDD835, -0.2px 0.2px 1px #FDD835";
+  const isAdmin = user && user.uid === adminUid;
+
+  const Links = isAdmin
+    ? [...baseLinks, { text: "admin", href: "/admin" }]
+    : [...baseLinks];
 
   return (
     <>

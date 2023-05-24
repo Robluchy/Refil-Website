@@ -55,7 +55,7 @@ export default function ProductDetails({ pro }: ProductCardProps) {
             h={"100%"}
           >
             <Heading
-              fontSize={{ base: "6xl", md: "8xl", lg: "7xl", xl: "8xl" }}
+              fontSize={{ base: "5xl", md: "7xl", lg: "6xl", xl: "7xl" }}
               fontWeight={"black"}
               textAlign={"center"}
               textTransform={"uppercase"}
@@ -117,13 +117,24 @@ export default function ProductDetails({ pro }: ProductCardProps) {
           </Box>
         </SimpleGrid>
       </Container>
-      <Container maxW={"7xl"}>
-        <Box>
+      <Container maxW={"7xl"} pb={20}>
+        <Box
+          display={"flex"}
+          w={"full"}
+          h={"full"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
           {user ? (
             user.points < pro.points ? (
-              <Box display={"flex"} alignItems={"center"} m={"auto"} mb={10}>
+              <Box display={"flex"} mt={10} mb={10} w={"full"} h={"full"}>
                 <Tooltip label="You don't have enough points" hasArrow>
-                  <Button isDisabled={user.points < pro.points} fontSize="2xl">
+                  <Button
+                    isDisabled={user.points < pro.points}
+                    fontSize="2xl"
+                    boxShadow="dark-lg"
+                    borderRadius={"xl"}
+                  >
                     {pro.points}
                     <Lottie
                       animationData={require("public/coins.json")}
@@ -141,33 +152,46 @@ export default function ProductDetails({ pro }: ProductCardProps) {
             </Link>
           )}
           {user && (
-            <Box display={"flex"} alignItems={"center"} m={"auto"} mb={10}>
-              <Box w={"7%"} h={"7%"}>
-                <Button
-                  onClick={() => {
-                    updateFavorite(user.uid, pro.name, isFavorite);
-                    setIsFavorite(!isFavorite);
-                  }}
-                  _hover={{ bg: "transparent" }}
-                  w={"fit-content"}
-                  h={"fit-content"}
-                  bg="transparent"
-                >
-                  {isFavorite ? (
-                    <Lottie animationData={require("public/heart.json")} />
-                  ) : (
-                    <Lottie
-                      animationData={require("public/black-heart.json")}
-                    />
-                  )}
-                </Button>
-              </Box>
+            <Box
+              w={"7%"}
+              h={"7%"}
+              m={"auto"}
+              p={2}
+              bg={"#D8EEFE"}
+              borderRadius={"xl"}
+              boxShadow="dark-lg"
+            >
+              <Button
+                onClick={() => {
+                  updateFavorite(user.uid, pro.name, isFavorite);
+                  setIsFavorite(!isFavorite);
+                }}
+                _hover={{ bg: "transparent" }}
+                w={"fit-content"}
+                h={"fit-content"}
+                bg="transparent"
+              >
+                {isFavorite ? (
+                  <Lottie animationData={require("public/heart.json")} />
+                ) : (
+                  <Lottie animationData={require("public/black-heart.json")} />
+                )}
+              </Button>
             </Box>
           )}
         </Box>
 
         {pro.description && (
-          <Box>
+          <Box
+            my={10}
+            textAlign={"center"}
+            w={"full"}
+            h={"full"}
+            p={10}
+            bg={"#D8EEFE"}
+            borderRadius={"xl"}
+            boxShadow="dark-lg"
+          >
             <Text fontSize={"2xl"} fontWeight={"bold"} m={4}>
               Description
             </Text>
