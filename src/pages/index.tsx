@@ -31,7 +31,7 @@ export default function Home({ products }: Props) {
       setLoading(false);
       const timer = setTimeout(() => {
         setShowIntro(false);
-      }, 4500);
+      }, 4800);
 
       return () => {
         clearTimeout(timer);
