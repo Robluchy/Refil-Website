@@ -51,13 +51,16 @@ export default function Home({ products }: Props) {
 
   return (
     <>
-      {!user && showIntro && <Intro />}
-      <Layout title="REFIL">
-        <Hero />
-        <Features />
-        <ProuctPreview products={products.slice(0, 3)} />
-        <Statistics />
-      </Layout>
+      {!user && showIntro ? (
+        <Intro />
+      ) : (
+        <Layout title="REFIL">
+          <Hero />
+          <Features />
+          <ProuctPreview products={products.slice(0, 3)} />
+          <Statistics />
+        </Layout>
+      )}
     </>
   );
 }
