@@ -11,7 +11,7 @@ const providers = [
     icon: (
       <Lottie
         animationData={require("public/google.json")}
-        style={{ width: "80px", height: "80px" }}
+        style={{ width: "70px", height: "70px" }}
       />
     ),
     onClick: handleGoogleLogin,

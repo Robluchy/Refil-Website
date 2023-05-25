@@ -38,6 +38,9 @@ export default function ProductDetails({ pro }: ProductCardProps) {
   const style = {
     height: 60,
   };
+    const style2 = {
+      height: 40,
+    };
   return (
     <Box bg={"#D8EEFE"} h={"100%"} w={"100%"}>
       <Container
@@ -149,7 +152,6 @@ export default function ProductDetails({ pro }: ProductCardProps) {
               <CheckShippingInfo pro={pro} user={user} />
             )
           ) : (
-            
             <Link href="/signup">
               <Button
                 fontSize="2xl"
@@ -164,8 +166,6 @@ export default function ProductDetails({ pro }: ProductCardProps) {
           )}
           {user && (
             <Box
-              w={"7%"}
-              h={"7%"}
               m={"auto"}
               p={2}
               bg={"#D8EEFE"}
@@ -183,9 +183,15 @@ export default function ProductDetails({ pro }: ProductCardProps) {
                 bg="transparent"
               >
                 {isFavorite ? (
-                  <Lottie animationData={require("public/heart.json")} />
+                  <Lottie
+                    animationData={require("public/heart.json")}
+                    style={style2}
+                  />
                 ) : (
-                  <Lottie animationData={require("public/black-heart.json")} />
+                  <Lottie
+                    animationData={require("public/black-heart.json")}
+                    style={style2}
+                  />
                 )}
               </Button>
             </Box>

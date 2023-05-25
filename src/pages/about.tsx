@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import {
   Box,
+  Text,
   Heading,
   Container,
   Stack,
@@ -59,6 +60,7 @@ export default function About() {
             </Heading>
           </motion.div>
         </Stack>
+
         <Container maxW={"7xl"}>
           <SimpleGrid
             columns={{ base: 1, md: 3 }}
