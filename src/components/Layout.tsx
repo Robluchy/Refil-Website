@@ -2,6 +2,7 @@ import Head from "next/head";
 import Navbar from "@/components/ui/Navbar";
 import { Box } from "@chakra-ui/react";
 import Footer from "./Footer";
+import { Transition } from "./animations/Transition";
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -29,10 +30,12 @@ export const Layout = ({ children, title }: LayoutProps) => {
           property="og:image"
           content="https://media.giphy.com/media/Rsp9jLIy0VZOKlZziw/giphy.gif"
         />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/icon.png" />
       </Head>
       <Navbar />
-      <Box userSelect="none">{children}</Box>
+      <Box userSelect="none">
+        <Transition>{children}</Transition>
+      </Box>
       <Footer />
     </>
   );

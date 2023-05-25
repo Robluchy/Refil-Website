@@ -5,6 +5,8 @@ import ProtectedRoute from "@/components/ProtectedRoute";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "@/styles/theme";
 import { AuthContextProvider } from "@/firebase/context/AuthContext";
+import { Transition } from "@/components/animations/Transition";
+import { AnimatePresence } from "framer-motion";
 
 const noAuthRequired = [
   "/",
@@ -22,12 +24,16 @@ export default function App({ Component, pageProps }: AppProps) {
     <AuthContextProvider>
       {noAuthRequired.includes(router.pathname) ? (
         <ChakraProvider theme={theme}>
-          <Component {...pageProps} />
+          <AnimatePresence mode="wait">
+            <Component {...pageProps} key={router.route} />
+          </AnimatePresence>
         </ChakraProvider>
       ) : (
         <ProtectedRoute>
           <ChakraProvider theme={theme}>
-            <Component {...pageProps} />
+            <AnimatePresence mode="wait">
+              <Component {...pageProps} key={router.route} />
+            </AnimatePresence>
           </ChakraProvider>
         </ProtectedRoute>
       )}

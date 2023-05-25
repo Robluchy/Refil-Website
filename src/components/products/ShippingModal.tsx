@@ -54,8 +54,8 @@ function ShippingModal({ pro }: props) {
         duration: 9000,
         isClosable: true,
       });
-
       onClose();
+      window.location.reload();
     } catch (e) {
       toast({
         title: "An error occurred.",
@@ -141,6 +141,8 @@ function ShippingModal({ pro }: props) {
                   placeholder="03008"
                   value={postalCode}
                   type="text"
+                  maxLength={5}
+                  minLength={5}
                   isRequired={true}
                   onChange={(e) => setPostalCode(e.target.value)}
                 />
@@ -161,6 +163,8 @@ function ShippingModal({ pro }: props) {
               <Input
                 placeholder="Phone number"
                 type="number"
+                maxLength={9}
+                minLength={9}
                 value={phoneNumber}
                 isRequired={true}
                 onChange={(e) => setPhoneNumber(e.target.value)}

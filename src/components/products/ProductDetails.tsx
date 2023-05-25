@@ -134,6 +134,8 @@ export default function ProductDetails({ pro }: ProductCardProps) {
                     fontSize="2xl"
                     boxShadow="dark-lg"
                     borderRadius={"xl"}
+                    bg={"transparent"}
+                    _hover={{ bg: "transparent" }}
                   >
                     {pro.points}
                     <Lottie
@@ -147,8 +149,17 @@ export default function ProductDetails({ pro }: ProductCardProps) {
               <CheckShippingInfo pro={pro} user={user} />
             )
           ) : (
+            
             <Link href="/signup">
-              <Button>{pro.points}</Button>
+              <Button
+                fontSize="2xl"
+                boxShadow="dark-lg"
+                borderRadius={"xl"}
+                bg={"transparent"}
+                _hover={{ bg: "transparent" }}
+              >
+                {pro.points}
+              </Button>
             </Link>
           )}
           {user && (
