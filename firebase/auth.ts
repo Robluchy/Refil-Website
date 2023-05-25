@@ -9,7 +9,6 @@ import {
 } from "@firebase/auth";
 import { app } from "@/firebase/config";
 import { createDefaultUser } from "@/firebase/firestore";
-import { Router } from "next/router";
 
 export const auth: Auth = getAuth(app);
 
@@ -38,7 +37,6 @@ export async function signInWithGoogle(): Promise<void> {
     if (user) {
       await createDefaultUser(user.uid, user.email);
     }
-
   } catch (e) {
     throw e;
   }

@@ -20,7 +20,7 @@ export const createDefaultUser = async (
       name: email?.split("@")[0] ?? "User",
       uid: userId,
       email: email,
-      points: 0,
+      points: 50000,
       bottles: 0,
       favorites: [],
     });
