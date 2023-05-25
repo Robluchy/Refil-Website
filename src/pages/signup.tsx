@@ -39,16 +39,6 @@ export default function SignUp() {
               <Stack spacing="5">
                 <ControlField />
               </Stack>
-              <Stack spacing="6">
-                <HStack>
-                  <Divider />
-                  <Text fontSize="sm" whiteSpace="nowrap" color="muted">
-                    or continue with
-                  </Text>
-                  <Divider />
-                </HStack>
-                <OAuthButtonGroup />
-              </Stack>
             </Stack>
           </Box>
         </Stack>

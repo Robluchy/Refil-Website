@@ -169,16 +169,7 @@ export default function Navbar() {
                       {formatPoints(user.points)}
                     </MenuItem>
                   </Show>
-                  <MenuItem
-                    gap={4}
-                    onClick={() => router.push("/settings")}
-                    _hover={{
-                      bg: "transparent",
-                    }}
-                  >
-                    <SlidersHorizontal size={32} weight="bold" />
-                    <span>Settings</span>
-                  </MenuItem>
+
                   <MenuItem
                     gap={4}
                     onClick={() => router.push("/favorites")}
